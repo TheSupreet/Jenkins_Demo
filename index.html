@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sum & Separate Odd/Even (One Input)</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 40px;
+        background: #f8f9fa;
+      }
+      input,
+      button {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+      }
+      .output {
+        margin-top: 20px;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Enter Two Positive Numbers (e.g., 10, 200)</h2>
+    <input type="text" id="numberInput" placeholder="e.g., 10,200" />
+    <button onclick="process()">Process</button>
+
+    <div id="result" class="output"></div>
+
+    <script>
+      function process() {
+        const input = document.getElementById("numberInput").value;
+        const nums = input.split(",").map((n) => parseInt(n.trim()));
+
+        if (nums.length !== 2 || nums.some((n) => isNaN(n) || n <= 0)) {
+          alert("Please enter exactly two valid positive numbers separated by a comma.");
+          return;
+        }
+
+        const result1 = analyze(nums[0], `First ${nums[0]} Numbers`);
+        const result2 = analyze(nums[1], `First ${nums[1]} Numbers`);
+
+        document.getElementById("result").innerHTML = result1 + "<hr>" + result2;
+      }
+
+      function analyze(n, title) {
+        let sum = 0,
+          evens = [],
+          odds = [];
+        for (let i = 1; i <= n; i++) {
+          sum += i;
+          (i % 2 === 0 ? evens : odds).push(i);
+        }
+
+        return `
+          <h3>${title}</h3>
+          <strong>Sum:</strong> ${sum}<br>
+          <strong>Even Numbers (${evens.length}):</strong> ${evens.join(", ")}<br>
+          <strong>Odd Numbers (${odds.length}):</strong> ${odds.join(", ")}
+        `;
+      }
+    </script>
+  </body>
+</html>
